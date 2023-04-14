@@ -158,7 +158,7 @@ var (
 	RegionConverter = MustConverter(Region)
 
 	RuleRequests = [][]string{
-		{"Service", "Service"},
+		{"Workload", "Workload"},
 		{"Verbs", "Verbs"},
 		{"Namespace", "Namespace"},
 		{"Resource", "Resource"},

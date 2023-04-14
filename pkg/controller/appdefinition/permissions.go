@@ -30,7 +30,7 @@ func toClusterPermissions(permissions v1.Permissions, labelMap, annotations map[
 		namespace := entry.Key
 		rules := entry.Value
 		if namespace == "" {
-			name := name.SafeConcatName(permissions.ServiceName, appInstance.Name, appInstance.Namespace, appInstance.ShortID())
+			name := name.SafeConcatName(permissions.Workload, appInstance.Name, appInstance.Namespace, appInstance.ShortID())
 			result = append(result, &rbacv1.ClusterRole{
 				ObjectMeta: metav1.ObjectMeta{
 					Name:        name,
@@ -47,7 +47,7 @@ func toClusterPermissions(permissions v1.Permissions, labelMap, annotations map[
 				Subjects: []rbacv1.Subject{
 					{
 						Kind:      "ServiceAccount",
-						Name:      permissions.ServiceName,
+						Name:      permissions.Workload,
 						Namespace: appInstance.Status.Namespace,
 					},
 				},
@@ -58,8 +58,8 @@ func toClusterPermissions(permissions v1.Permissions, labelMap, annotations map[
 				},
 			})
 		} else {
-			name := name.SafeConcatName(permissions.ServiceName, appInstance.Name, appInstance.Namespace, appInstance.ShortID(), namespace)
-			result = append(result, toRoleAndRoleBinding(name, namespace, permissions.ServiceName, appInstance.Status.Namespace,
+			name := name.SafeConcatName(permissions.Workload, appInstance.Name, appInstance.Namespace, appInstance.ShortID(), namespace)
+			result = append(result, toRoleAndRoleBinding(name, namespace, permissions.Workload, appInstance.Status.Namespace,
 				toRBACPolicyRules(rules), labelMap, annotations, appInstance)...)
 		}
 	}

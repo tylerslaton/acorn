@@ -284,8 +284,8 @@ func (p PolicyRule) Namespaces() (result []string) {
 }
 
 type Permissions struct {
-	ServiceName string       `json:"serviceName,omitempty"`
-	Rules       []PolicyRule `json:"rules,omitempty"`
+	Workload string       `json:"workload,omitempty"`
+	Rules    []PolicyRule `json:"rules,omitempty"`
 }
 
 func (in *Permissions) HasRules() bool {
@@ -304,7 +304,7 @@ func (in *Permissions) Get() Permissions {
 
 func FindPermission(serviceName string, perms []Permissions) Permissions {
 	for _, perm := range perms {
-		if serviceName == perm.ServiceName {
+		if serviceName == perm.Workload {
 			return perm
 		}
 	}

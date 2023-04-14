@@ -108,11 +108,11 @@ func toAcorn(appInstance *v1.AppInstance, tag name.Reference, pullSecrets *PullS
 
 func trimPermPrefix(perms []v1.Permissions, name string) (result []v1.Permissions) {
 	for _, perm := range perms {
-		prefix := perm.ServiceName + "."
-		if strings.HasPrefix(perm.ServiceName, prefix) {
+		prefix := perm.Workload + "."
+		if strings.HasPrefix(perm.Workload, prefix) {
 			result = append(result, v1.Permissions{
-				ServiceName: strings.TrimPrefix(perm.ServiceName, prefix),
-				Rules:       perm.Rules,
+				Workload: strings.TrimPrefix(perm.Workload, prefix),
+				Rules:    perm.Rules,
 			})
 		}
 	}

@@ -6726,7 +6726,7 @@ func schema_pkg_apis_internalacornio_v1_Permissions(ref common.ReferenceCallback
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
-					"serviceName": {
+					"workload": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",

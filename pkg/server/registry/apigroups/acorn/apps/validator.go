@@ -302,7 +302,7 @@ func (s *Validator) checkRequestedPermsSatisfyImagePerms(perms []v1.Permissions,
 			continue
 		}
 
-		if specPerms := v1.FindPermission(perm.ServiceName, requestedPerms); !specPerms.HasRules() ||
+		if specPerms := v1.FindPermission(perm.Workload, requestedPerms); !specPerms.HasRules() ||
 			!equality.Semantic.DeepEqual(perm.Rules, specPerms.Get().Rules) {
 			permsError.Permissions = append(permsError.Permissions, perm)
 			continue
@@ -513,8 +513,8 @@ func buildPermissionsFrom(containers map[string]v1.Container) []v1.Permissions {
 	var permissions []v1.Permissions
 	for _, entry := range typed.Sorted(containers) {
 		entryPermissions := v1.Permissions{
-			ServiceName: entry.Key,
-			Rules:       entry.Value.Permissions.Get().Rules,
+			Workload: entry.Key,
+			Rules:    entry.Value.Permissions.Get().Rules,
 		}
 
 		for _, sidecar := range typed.Sorted(entry.Value.Sidecars) {
